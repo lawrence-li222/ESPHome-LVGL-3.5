@@ -1,0 +1,111 @@
+# =============================================================================
+# HARDWARE CONFIGURATION - Guition ESP32-S3-4848S040
+# =============================================================================
+# This file defines the physical hardware settings for the ESP32 touchscreen.
+# It tells ESPHome how to communicate with the display, touchscreen, and
+# other components on this specific device.
+#
+# WARNING: These settings are specific to the Guition ESP32-S3-4848S040.
+#          Using this config with a different device may cause issues.
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# PROCESSOR / BOARD
+# -----------------------------------------------------------------------------
+# Defines which ESP32 chip and development framework to use.
+# - board: The ESP32-S3 development kit configuration
+# - framework: esp-idf is Espressif's official development framework
+#              (more powerful than Arduino, required for this display)
+# -----------------------------------------------------------------------------
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      COMPILER_OPTIMIZATION_SIZE: y
+      CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: y
+      CONFIG_ESP32S3_DATA_CACHE_64KB: y
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: y
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: y
+      CONFIG_SPIRAM_RODATA: y
+
+
+# -----------------------------------------------------------------------------
+# ESPHOME DEVICE IDENTITY
+# -----------------------------------------------------------------------------
+# Basic device information visible in Home Assistant.
+# - name: Internal hostname (used for mDNS, e.g., device-name.local)
+# - friendly_name: Human-readable name shown in Home Assistant UI
+# - area: Which room/area this device belongs to in Home Assistant
+#
+# These values come from variables ($name, etc.) defined in template.yaml
+# -----------------------------------------------------------------------------
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  area: ${room}
+
+
+# -----------------------------------------------------------------------------
+# OVER THE AIR (OTA) UPDATES
+# -----------------------------------------------------------------------------
+# Allows updating the firmware wirelessly without plugging in USB.
+# Once configured, you can flash new code from ESPHome dashboard.
+# -----------------------------------------------------------------------------
+ota:
+  platform: esphome
+
+
+# -----------------------------------------------------------------------------
+# HOME ASSISTANT API
+# -----------------------------------------------------------------------------
+# Enables communication between this device and Home Assistant.
+# Without this, the device won't appear in Home Assistant.
+# The encryption key is typically set in your secrets.yaml file.
+# -----------------------------------------------------------------------------
+api:
+
+
+# -----------------------------------------------------------------------------
+# LOGGING
+# -----------------------------------------------------------------------------
+# Outputs debug messages for troubleshooting.
+# View logs in ESPHome dashboard or via serial connection.
+# -----------------------------------------------------------------------------
+logger:
+
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+output:
+  - platform: ledc
+    id: backlight_output
+    pin: 1
+
+spi:
+  - id: lcd_spi
+    type: quad
+    clk_pin: 47
+    data_pins: [21, 48, 40, 39]
+
+i2c:
+  - sda: 4
+    scl: 8
+
+touchscreen:
+  - platform: axs15231
+    id: tft_touch
+    #display: tft_display
+
+display:
+  - platform: mipi_spi
+    id: tft_display
+    model: JC3248W535
+    data_rate: 40MHz
+    update_interval: never
+    auto_clear_enabled: false
