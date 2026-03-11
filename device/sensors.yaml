@@ -378,36 +378,6 @@ text_sensor:
 binary_sensor:
 
   # ===========================================================================
-  # SENSOR: Office Evening Scene Active
-  # ===========================================================================
-  # WHAT IT MONITORS:
-  #   Whether the "Evening" lighting scene is currently active
-  #   Watches: switch.office_evening_stateful_scene in Home Assistant
-  #
-  # WHAT IT UPDATES:
-  #   The "Evening" button's visual state (highlighted when active)
-  #
-  # HOW IT WORKS:
-  #   Home Assistant has a binary sensor that's ON when the evening scene
-  #   is active. When this changes, the button appearance updates to match.
-  #   "trigger_on_initial_state: true" ensures the button shows correctly
-  #   right when the device boots up, not just when state changes later.
-  #
-  # RELATED UI ELEMENT:
-  #   lvgl.yaml → office_scene_evening_button
-  # ===========================================================================
-  - platform: homeassistant
-    id: office_scene_evening
-    entity_id: switch.office_evening_stateful_scene
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_scene_evening_button
-          state:
-            checked: !lambda return x;
-
-  # ===========================================================================
   # SENSOR: Office Dimmed Scene Active
   # ===========================================================================
   # WHAT IT MONITORS:
