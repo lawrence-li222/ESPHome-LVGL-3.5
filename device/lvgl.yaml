@@ -84,46 +84,22 @@ lvgl:
       
       widgets:
       
-        # =========================================================================
-        # BUTTON: Features Scene
-        # =========================================================================
-        # WHAT THIS BUTTON DOES:
-        #   Activates the "Features" lighting scene - a preset that turns on
-        #   LED strip accent lighting for a decorative effect.
-        #
-        # WHEN PRESSED:
-        #   Calls Home Assistant service: switch.toggle
-        #   Target: switch.office_features_stateful_scene
-        #
-        # HOW THE BUTTON KNOWS IF IT'S ACTIVE:
-        #   sensors.yaml monitors: switch.office_features_stateful_scene
-        #   When that sensor is ON, this button appears "checked" (highlighted)
-        #   When that sensor is OFF, this button appears unchecked (dimmed)
-        # =========================================================================
-        - button: 
-            height: $button_height_single
-            width: $button_width
-            checkable: true
-            id: office_scene_features_button
+        - slider:
+            id: fan_speed_slider
+            width: 30
+            height: 200
             styles: control
-            grid_cell_column_pos: 0
-            grid_cell_row_pos: 0
-            widgets:
-              - label:
-                  text_font: $icon_font
-                  align: top_left
-                  id: scene_features_icon                
-                  text: $ledstrip
-              - label:
-                  align: bottom_left
-                  id: scene_features_label
-                  text: "Features"
-            on_press:
+            min_value: 0
+            max_value: 100
+            value: 50
+            # Optional: Add padding for the knob
+            pad_all: 5
+            on_value_changed:
               - homeassistant.service:
-                  service: switch.toggle
+                  service: light.turn_on
                   data:
-                    entity_id: switch.office_features_stateful_scene
-
+                    entity_id: light.office_main_lights
+                    brightness_pct: !lambda return id(brightness_slider).value;
         # =========================================================================
         # BUTTON: Calls Scene
         # =========================================================================
