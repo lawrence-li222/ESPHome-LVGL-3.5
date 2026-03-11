@@ -432,54 +432,6 @@ binary_sensor:
             checked: !lambda return x;
 
   # ===========================================================================
-  # SENSOR: Office Calls Scene Active
-  # ===========================================================================
-  # WHAT IT MONITORS:
-  #   Whether the "Calls" (video call) lighting scene is currently active
-  #   Watches: switch.office_calls_stateful_scene in Home Assistant
-  #
-  # WHAT IT UPDATES:
-  #   The "Calls" button's visual state (highlighted when active)
-  #
-  # RELATED UI ELEMENT:
-  #   lvgl.yaml → office_scene_calls_button
-  # ===========================================================================
-  - platform: homeassistant
-    id: office_scene_desk_call
-    entity_id: switch.office_calls_stateful_scene
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_scene_calls_button
-          state:
-            checked: !lambda return x;
-
-  # ===========================================================================
-  # SENSOR: Office Features Scene Active
-  # ===========================================================================
-  # WHAT IT MONITORS:
-  #   Whether the "Features" (LED accent) lighting scene is currently active
-  #   Watches: switch.office_features_stateful_scene in Home Assistant
-  #
-  # WHAT IT UPDATES:
-  #   The "Features" button's visual state (highlighted when active)
-  #
-  # RELATED UI ELEMENT:
-  #   lvgl.yaml → office_scene_features_button
-  # ===========================================================================
-  - platform: homeassistant
-    id: office_scene_features
-    entity_id: switch.office_features_stateful_scene
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_scene_features_button
-          state:
-            checked: !lambda return x;
-
-  # ===========================================================================
   # SENSOR: 3D Printer Power State
   # ===========================================================================
   # WHAT IT MONITORS:
