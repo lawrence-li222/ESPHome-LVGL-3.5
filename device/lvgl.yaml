@@ -94,12 +94,7 @@ lvgl:
             value: 50
             # Optional: Add padding for the knob
             pad_all: 5
-            on_value_changed:
-              - homeassistant.service:
-                  service: light.turn_on
-                  data:
-                    entity_id: light.office_main_lights
-                    brightness_pct: !lambda return id(brightness_slider).value;
+            
         
         # =========================================================================
         # BUTTON: Dimmed Scene
