@@ -91,6 +91,13 @@ lvgl:
             x: 20
             y: 50
             styles: control
+            radius: 0
+            indicator:
+              bg_opa: transp
+            knob:
+              radius: 1
+              widthL: 4
+              height: 10%
             min_value: 0
             max_value: 100
             value: 50
