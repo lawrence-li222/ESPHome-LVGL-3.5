@@ -86,7 +86,7 @@ lvgl:
       
         - slider:
             id: fan_speed_slider
-            width: 100
+            width: 20
             height: 280
             x: 20
             y: 90
@@ -94,16 +94,16 @@ lvgl:
             radius: 0
             indicator:
               radius: 0
+              bg_opa: 20%
             knob:
                 radius: 1
                 width: 1
                 height: 2
-                pad_all: -5
             min_value: 0
             max_value: 100
             value: 50
             # Optional: Add padding for the knob
-            #pad_all: 10
+            pad_all: 10
             
         
         # =========================================================================
