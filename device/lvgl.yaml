@@ -92,9 +92,11 @@ lvgl:
             y: 50
             styles: control
             radius: 0
+            indicator:
+              radius: 0
             knob:
               radius: 1
-              width: 4
+              width: 1
               height: 5%
             min_value: 0
             max_value: 100
