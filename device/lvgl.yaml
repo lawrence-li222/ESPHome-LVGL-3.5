@@ -90,14 +90,12 @@ lvgl:
             height: 280
             x: 20
             y: 50
-            pad_top: 44
-            pad_left: 50
             styles: control
             min_value: 0
             max_value: 100
             value: 50
             # Optional: Add padding for the knob
-            # pad_all: 10
+            pad_all: 10
             
         
         # =========================================================================
