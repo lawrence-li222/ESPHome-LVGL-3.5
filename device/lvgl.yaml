@@ -102,7 +102,7 @@ lvgl:
             max_value: 100
             value: 50
             # Optional: Add padding for the knob
-            pad_all: 10
+            #pad_all: 10
             
         
         # =========================================================================
