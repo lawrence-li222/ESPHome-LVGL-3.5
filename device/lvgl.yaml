@@ -88,6 +88,8 @@ lvgl:
             id: fan_speed_slider
             width: 10
             height: 280
+            x: 20
+            y: 50
             pad_top: 44
             pad_left: 50
             styles: control
