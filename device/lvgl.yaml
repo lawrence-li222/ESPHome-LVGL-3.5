@@ -75,7 +75,7 @@ lvgl:
       # scrollbar_mode: "off"
       # scroll_dir: "hor"
       # width: 100%
-      # bg_color: Black
+      bg_color: Black
       # bg_opa: cover
       # pad_top: 34
       # pad_bottom: 5
@@ -88,6 +88,8 @@ lvgl:
             id: fan_speed_slider
             width: 30
             height: 180
+            pad_top: 44
+            pad_left: 10
             styles: control
             min_value: 0
             max_value: 100
