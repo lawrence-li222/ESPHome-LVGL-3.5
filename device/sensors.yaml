@@ -22,9 +22,9 @@ binary_sensor:
                 id: fan_angle
                 value: "0"
             - lvgl.widget.update:
-              id: fan_icon_lbl
-              text_color: 0x546E7A
-              transform_angle: 0
+                id: fan_icon_lbl
+                text_color: 0x546E7A
+                transform_angle: 0
             
 sensor:
   - platform: homeassistant
