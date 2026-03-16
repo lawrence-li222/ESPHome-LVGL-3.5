@@ -24,6 +24,14 @@ binary_sensor:
             - lvgl.label.update:
                 id: fan_btn_state_lbl
                 text: "  fan On"
+            - lvgl.slider.update:
+                id: fan_speed_slider
+                value: !lambda 'return x;'
+            - lvgl.label.update:
+                id: fan_speed_label
+                text: !lambda |-
+                  if (isnan(x)) return std::string("--");
+                  return std::to_string((int)x) + "%";
           else:
             # Fan turned OFF – grey icon + "Off" label, reset angle
             - globals.set:
