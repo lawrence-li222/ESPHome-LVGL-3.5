@@ -27,6 +27,7 @@ font:
       "\U000F0317",  # mdi-lan
       "\U000F0425",  # mdi-power
       "\U000F050F",  # mdi-thermometer
+      "\U000F0343",  # mdi-fan
       ]
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
     id: icon_font_small
@@ -57,5 +58,6 @@ substitutions:
   battery:        "\U000F089E"
   filament:       "\U000F07DE"
   lan:            "\U000F0317"
+  fan:            "\U000F0343"
   power:          "\U000F0425"
   thermometer:    "\U000F050F"

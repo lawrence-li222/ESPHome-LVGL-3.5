@@ -82,12 +82,20 @@ lvgl:
       # pad_right: 5
       
       widgets:
-      
+
+        - label:
+          id: fan_icon
+          text: ${fan}
+          text_font: icon_font
+          x: 30
+          y: 70
+          text_color: ${color_accent}
+
         - slider:
             id: fan_speed_slider
             width: 50%
             height: 12
-            x: 50
+            x: 80
             y: 70
             min_value: 0
             max_value: 100
@@ -110,11 +118,26 @@ lvgl:
             # Optional: Add padding for the knob
             pad_all: 10
 
+            # animated fan icon when on
+            # on_value_changed:
+            #   - if:
+            #       condition:
+            #         lambda: 'return id(fan_speed_slider).get_value() > 0;'
+            #       then:
+            #         - lvgl.animation.set_duration:
+            #             id: fan_rotation
+            #             duration: !lambda 'return 1000.0 / (id(fan_speed_slider).get_value() / 10.0);'
+            #         - lvgl.animation.start:
+            #             id: fan_rotation
+            #       else:
+            #         - lvgl.animation.stop:
+            #             id: fan_rotation
+
         # ── Speed readout ────────────────────────────────────────────────────
         - label:
             id: office_ceiling_fan_speed_label
             text: "0%"
-            x: 320
+            x: 350
             y: 65
             text_font: montserrat_18
             text_color: ${color_accent}
@@ -131,6 +154,8 @@ lvgl:
             text_color: ${color_muted}
             # shadow_width: 2
             # shadow_color: ${color_shadow}
+            
+      
             
         
         # =========================================================================
@@ -171,5 +196,15 @@ lvgl:
         #           service: switch.toggle
         #           data:
         #             entity_id: switch.office_dimmed_stateful_scene
+
+  animations:
+    - id: fan_rotation
+      widget: fan_icon
+      property: rotation
+      start_value: 0
+      end_value: 360
+      duration: 1000
+      repeat: true
+      direction: forward
 
        
