@@ -51,7 +51,7 @@ sensor:
         - lvgl.label.update:
             id: office_ceiling_fan_speed_label
             text: !lambda return std::to_string(int(x)) + "%";
-        - lvgl.widget.update:
+        - lvgl.slider.update:
             id: fan_speed_slider
             value: !lambda return x;
     trigger_on_initial_state: true
