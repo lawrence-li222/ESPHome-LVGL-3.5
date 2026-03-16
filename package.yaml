@@ -8,28 +8,6 @@ packages:
   fonts: !include assets/fonts.yaml
   icons: !include assets/icons.yaml
   button: !include theme/button.yaml
-  weather: !include weather_sensors.yaml
-  ui: !include ui_refresh.yaml
 
 substitutions:
-  weather_entity: weather.forecast_home
   ceiling_fan: fan.office_ceiling_fan 
-
-api:
-  # Fires every time HA API reconnects (covers reboots + wifi drops)
-  on_client_connected:
-    - logger.log: "HA connected – requesting full entity refresh"
-    - delay: 1s
-    - homeassistant.service:
-        service: homeassistant.update_entity
-        data:
-          entity_id: ${weather_entity}
-    - homeassistant.service:
-        service: homeassistant.update_entity
-        data:
-          entity_id: ${fan_entity}
-    
-     # Wait for on_value callbacks to fire and populate sensor memory
-    - delay: 500ms
-    # Now explicitly write every current value to the UI
-    - script.execute: refresh_ui_all
