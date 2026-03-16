@@ -45,10 +45,14 @@ sensor:
     entity_id: ${ceiling_fan}          # ← same entity
     attribute: percentage
     on_value:
-      - lvgl.label.update:
-          id: fan_speed_label
-          text: !lambda |-
-            if (isnan(x)) return std::string("--");
-            return std::to_string((int)x) + "%";
+      then:
+        - lvgl.slider.update:
+            id: fan_speed_slider
+            value: !lambda 'return x;'
+        - lvgl.label.update:
+            id: fan_speed_label
+            text: !lambda |-
+              if (isnan(x)) return std::string("--");
+              return std::to_string((int)x) + "%";
 
    
