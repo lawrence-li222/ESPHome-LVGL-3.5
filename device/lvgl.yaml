@@ -162,6 +162,7 @@ lvgl:
             radius: 18
             widgets:
               - label:
+                  id: fan_btn_state_lbl
                   text: "  Fan On"
                   text_color: ${color_white}
                   text_font: montserrat_14

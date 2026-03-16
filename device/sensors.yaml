@@ -16,6 +16,13 @@ binary_sensor:
             - lvgl.widget.update:
                 id: fan_icon_lbl
                 text_color: 0x29B6F6
+            - lvgl.widget.update:
+                id: fan_btn_toggle
+                tebg_color: ${color_btn_on}
+            # fan toggle lable to on    
+            - lvgl.label.update:
+                id: fan_btn_state_lbl
+                text: "  fan On"
           else:
             # Fan turned OFF – grey icon + "Off" label, reset angle
             - globals.set:
@@ -25,6 +32,12 @@ binary_sensor:
                 id: fan_icon_lbl
                 text_color: 0x546E7A
                 transform_angle: 0
+            - lvgl.widget.update:
+                id: fan_btn_toggle
+                bg_color: ${color_btn_off}
+            - lvgl.label.update:
+                id: fan_btn_state_lbl
+                text: "  Fan Off"
             
 sensor:
   - platform: homeassistant
