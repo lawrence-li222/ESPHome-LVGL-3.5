@@ -1,5 +1,5 @@
 substitutions:
-  fan: fan.guest_bedroom_left_ceilng_fan      # must match ha_fan.yaml
+  ceiling_fan: fan.guest_bedroom_left_ceilng_fan      # must match ha_fan.yaml
   
 # =============================================================================
 # SENSORS - Home Assistant State Synchronization
@@ -44,7 +44,7 @@ substitutions:
 sensor:
   - platform: homeassistant
     id: fan_percentage
-    entity_id: ${fan}
+    entity_id: ${ceiling_fan}
     attribute: percentage
     on_value:
       then:

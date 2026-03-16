@@ -1,5 +1,5 @@
 substitutions:
-  fan: fan.guest_bedroom_left_ceilng_fan      # must match ha_fan.yaml
+  ceiling_fan: fan.guest_bedroom_left_ceilng_fan      # must match ha_fan.yaml
 
   # ── Colours (tweak here, applied everywhere) ──────────────────────────────
   color_bg:         "0x0D0D1A"
@@ -114,7 +114,7 @@ lvgl:
                 - homeassistant.service:
                     service: fan.set_percentage
                     data:
-                      entity_id: ${fan}
+                      entity_id: ${ceiling_fan}
                       percentage: !lambda return x;
 
         
@@ -143,7 +143,7 @@ lvgl:
         # ── Animated Fan Icon ─────────────────────────────────────────────────
         - label:
             id: fan_icon
-            text: ${fan}
+            text: ${ceiling_fan}
             x: 20
             y: 50
             text_font: icon_font
@@ -155,7 +155,7 @@ lvgl:
                 - homeassistant.service:
                     service: fan.toggle
                     data:
-                      entity_id: ${fan}
+                      entity_id: ${ceiling_fan}
 
   animations:
     - id: fan_rotation
