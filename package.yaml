@@ -9,3 +9,6 @@ packages:
   icons: !include assets/icons.yaml
   button: !include theme/button.yaml
   weather: !include weather_sensors.yaml
+
+substitutions:
+  weather_entity: weather.forecast_home

@@ -1,6 +1,6 @@
 substitutions:
   # Weather sensor update interval (ms)
-  weather_info: weather.forecast_home
+  weather_entity: weather.forecast_home
 
 # ============================================================
 # weather_sensors.yaml
@@ -13,7 +13,7 @@ sensor:
   # ── Temperature ───────────────────────────────────────
   - platform: homeassistant
     id: ha_temperature
-    entity_id: ${weather_info}               # ← your HA weather entity
+    entity_id: ${weather_entity}               # ← your HA weather entity
     attribute: temperature
     on_value:
       - lvgl.label.update:
@@ -35,7 +35,7 @@ sensor:
   # ── Feels Like ────────────────────────────────────────
   - platform: homeassistant
     id: ha_feels_like
-    entity_id: ${weather_info}
+    entity_id: ${weather_entity}
     attribute: apparent_temperature
     on_value:
       - lvgl.label.update:
@@ -56,7 +56,7 @@ sensor:
   # ── Humidity ──────────────────────────────────────────
   - platform: homeassistant
     id: ha_humidity
-    entity_id: ${weather_info}
+    entity_id: ${weather_entity}
     attribute: humidity
     on_value:
       - lvgl.label.update:
@@ -77,7 +77,7 @@ sensor:
   # ── Wind Speed ────────────────────────────────────────
   - platform: homeassistant
     id: ha_wind_speed
-    entity_id: ${weather_info}
+    entity_id: ${weather_entity}
     attribute: wind_speed
     on_value:
       - lvgl.label.update:
@@ -91,7 +91,7 @@ sensor:
   # ── Precipitation ─────────────────────────────────────
   - platform: homeassistant
     id: ha_precipitation
-    entity_id: ${weather_info}
+    entity_id: ${weather_entity}
     attribute: precipitation
     on_value:
       - lvgl.label.update:
@@ -105,7 +105,7 @@ sensor:
   # ── Wind Bearing (degrees) ────────────────────────────
   - platform: homeassistant
     id: ha_wind_bearing
-    entity_id: ${weather_info}
+    entity_id: ${weather_entity}
     attribute: wind_bearing
     on_value:
       - lvgl.label.update:
@@ -123,7 +123,7 @@ sensor:
   # ── Visibility ────────────────────────────────────────
   - platform: homeassistant
     id: ha_visibility
-    entity_id: ${weather_info}
+    entity_id: ${weather_entity}
     attribute: visibility
     on_value:
       - lvgl.label.update:
@@ -137,7 +137,7 @@ sensor:
   # ── Pressure ──────────────────────────────────────────
   - platform: homeassistant
     id: ha_pressure
-    entity_id: ${weather_info}
+    entity_id: ${weather_entity}
     attribute: pressure
     on_value:
       - lvgl.label.update:
@@ -152,7 +152,7 @@ sensor:
 text_sensor:
   - platform: homeassistant
     id: ha_weather_condition
-    entity_id: ${weather_info}               # ← your HA weather entity
+    entity_id: ${weather_entity}               # ← your HA weather entity
     on_value:
       # Map HA condition string → MDI glyph + accent colour
       - lambda: |-
