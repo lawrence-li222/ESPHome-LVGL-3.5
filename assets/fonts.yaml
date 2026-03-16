@@ -39,6 +39,25 @@ font:
     size: 15
     bpp: 4
 
+  # MDI icon font – fan glyph only (keeps firmware small)
+  - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_56
+    size: 56
+    bpp: 4
+    glyphs:
+      - "\U000F0210"   # mdi:fan
+      - "\U000F0211"   # mdi:fan-off  (optional)
+
+  - file: "gfonts://Roboto"
+    id: roboto_24
+    size: 24
+    bpp: 4
+
+  - file: "gfonts://Roboto"
+    id: roboto_16
+    size: 16
+    bpp: 4
+
 lvgl:
   style_definitions:
     - id: roboto15_style

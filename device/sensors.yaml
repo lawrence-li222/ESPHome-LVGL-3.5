@@ -1,85 +1,39 @@
 substitutions:
   ceiling_fan: fan.guest_bedroom_left_ceilng_fan      # must match ha_fan.yaml
   
-# =============================================================================
-# SENSORS - Home Assistant State Synchronization
-# =============================================================================
-# This file creates sensors that monitor Home Assistant entities and update
-# the touchscreen buttons to reflect the current state of your smart devices.
-#
-# WHY THIS FILE EXISTS:
-# When you press a button on the touchscreen, it sends a command to Home
-# Assistant. But what if someone turns on a light using their phone, or a
-# scene activates automatically? This file ensures the touchscreen display
-# always shows the ACTUAL state of each device, not just what was last pressed.
-#
-# HOW IT WORKS:
-# 1. Each sensor subscribes to a Home Assistant entity (switch, sensor, etc.)
-# 2. When that entity's state changes, the "on_state" or "on_value" trigger fires
-# 3. The trigger updates the corresponding button in lvgl.yaml to show the new state
-#
-# KEY CONCEPTS:
-# - "platform: homeassistant" = reads state directly from Home Assistant
-# - "platform: template" = calculates a value using code (lambda)
-# - "entity_id:" = the Home Assistant device/entity to monitor
-# - "id:" = unique name to reference this sensor elsewhere in ESPHome
-# - "trigger_on_initial_state: true" = update button immediately when device boots
-# - "lvgl.widget.update" = changes how a button looks on screen
-# - "checked: !lambda return x;" = x is the sensor's boolean state (true/false)
-#
-# RELATIONSHIP TO lvgl.yaml:
-# Each sensor here has a matching button in lvgl.yaml:
-#   - This file READS state from Home Assistant → updates button appearance
-#   - lvgl.yaml SENDS commands to Home Assistant → when button is pressed
-# =============================================================================
-
-
-# =============================================================================
-# REGULAR SENSORS (Numeric Values)
-# =============================================================================
-# These sensors read numeric values like temperature and position.
-# They're used to display information or calculate other states.
-# =============================================================================
-
-sensor:
-  - platform: homeassistant
-    id: fan_percentage
-    entity_id: ${ceiling_fan}
-    attribute: percentage
-    on_value:
-      then:
-        - lvgl.label.update:
-            id: office_ceiling_fan_speed_label
-            text: !lambda return std::to_string(int(x)) + "%";
-        - lvgl.slider.update:
-            id: fan_speed_slider
-            value: !lambda return x;
-   # trigger_on_initial_state: true
-
-# =============================================================================
-# BINARY SENSORS (On/Off States)
-# =============================================================================
-# These sensors read boolean (true/false) states like switch positions.
-# They're used to update button colors and states on the touchscreen.
-# =============================================================================
-
+# ─── Home Assistant sensors ───────────────────────────────
 binary_sensor:
   - platform: homeassistant
-    id: fan_state
-    entity_id: ${fan}
+    id: ha_fan_state
+    entity_id: ${ceiling_fan}          # ← change to your fan entity
     on_state:
-      then:
-        - if:
-            condition:
-              binary_sensor.is_on: fan_state
-            then:
-              - lvgl.animation.start: fan_rotation
-              - lvgl.widget.update:
-                  id: fan_icon
-                  text_color: ${color_accent}
-            else:
-              - lvgl.animation.stop: fan_rotation
-              - lvgl.widget.update:
-                  id: fan_icon
-                  text_color: ${color_muted}
-       
+      - lambda: id(fan_on) = x;
+      - if:
+          condition:
+            lambda: return x;
+          then:
+            # Fan turned ON – blue icon + "Running" label
+            - lvgl.widget.update:
+                id: fan_icon_lbl
+                text_color: 0x29B6F6
+          else:
+            # Fan turned OFF – grey icon + "Off" label, reset angle
+            - globals.set:
+                id: fan_angle
+                value: "0"
+            - lvgl.widget.update:
+              id: fan_icon_lbl
+              text_color: 0x546E7A
+              transform_angle: 0
+            
+sensor:
+  - platform: homeassistant
+    id: ha_fan_speed
+    entity_id: ${ceiling_fan}          # ← same entity
+    attribute: percentage
+    on_value:
+      - lvgl.label.update:
+          id: fan_speed_label
+          text: !lambda |-
+            if (isnan(x)) return std::string("--");
+            return std::to_string((int)x) + "%";

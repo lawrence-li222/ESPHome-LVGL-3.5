@@ -115,3 +115,14 @@ display:
     update_interval: never
     auto_clear_enabled: false
 
+
+# ─── State tracking ───────────────────────────────────────
+globals:
+  - id: fan_angle      # Current rotation angle (0–3599, tenths of a degree)
+    type: int
+    restore_value: no
+    initial_value: "0"
+  - id: fan_on         # Mirror of HA fan state
+    type: bool
+    restore_value: no
+    initial_value: "false"

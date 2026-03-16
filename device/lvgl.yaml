@@ -82,7 +82,18 @@ lvgl:
       # pad_right: 5
       
       widgets:
-       
+        - label:
+            id: fan_icon_lbl
+            x: 30
+            y: 200
+            text: "\U000F0210"       # mdi:fan glyph
+            text_font: mdi_56
+            text_color: 0x546E7A    # starts grey (off)
+            # Pivot at icon centre so it spins in place
+            transform_pivot_x: 28
+            transform_pivot_y: 28
+            transform_angle: 0
+
         - slider:
             id: fan_speed_slider
             width: 50%
@@ -109,18 +120,10 @@ lvgl:
             
             # Optional: Add padding for the knob
             pad_all: 10
-            on_value:
-              then:
-                - homeassistant.service:
-                    service: fan.set_percentage
-                    data:
-                      entity_id: ${ceiling_fan}
-                      percentage: !lambda return x;
-
-        
+                
         # ── Speed readout ────────────────────────────────────────────────────
         - label:
-            id: office_ceiling_fan_speed_label
+            id: fan_speed_label
             text: "0%"
             x: 350
             y: 65
@@ -140,33 +143,18 @@ lvgl:
             # shadow_width: 2
             # shadow_color: ${color_shadow}
 
-        # ── Animated Fan Icon ─────────────────────────────────────────────────
-        - label:
-            id: fan_icon
-            text: ${ceiling_fan}
-            x: 20
-            y: 50
-            text_font: icon_font
-            text_color: ${color_accent}
-            shadow_width: 4
-            shadow_color: ${color_shadow}
-            on_click:
-              then:
-                - homeassistant.service:
-                    service: fan.toggle
-                    data:
-                      entity_id: ${ceiling_fan}
-
-  animations:
-    - id: fan_rotation
-      widget: fan_icon
-      property: rotation
-      start_value: 0
-      end_value: 360
-      duration: 1000
-      repeat: true
-      direction: normal
-      path: linear
-      delay: 0
-            
-       
+# ─── Animation interval ───────────────────────────────────
+# Runs every 40 ms (~25 fps). Advances angle only while fan is ON.
+interval:
+  - interval: 40ms
+    then:
+      - if:
+          condition:
+            lambda: return id(fan_on);
+          then:
+            - lambda: |-
+                id(fan_angle) = (id(fan_angle) + 15) % 3600;  // 15 = speed
+            - lvgl.widget.update:
+                id: fan_icon_lbl
+                transform_angle: !lambda return id(fan_angle);
+  
