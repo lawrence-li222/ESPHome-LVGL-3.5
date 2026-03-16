@@ -90,13 +90,21 @@ lvgl:
       # pad_right: 5
       
       widgets:
-       
+
+        - label:
+            text: "Fan peed"
+            x: 400
+            y: 30
+            text_font: montserrat_16
+            text_color: ${color_muted}
+            # shadow_width: 2
+            # shadow_color: ${color_shadow}
         - slider:
             id: fan_speed_slider
             width: 50%
             height: 12
-            x: 80
-            y: 70
+            x: 70
+            y: 80
             min_value: 0
             max_value: 100
             value: 0
@@ -135,8 +143,8 @@ lvgl:
         - label:
             id: fan_speed_label
             text: "0%"
-            x: 340
-            y: 70
+            x: 380
+            y: 80
             text_font: montserrat_18
             text_color: ${color_accent}
             bg_color: 0x000000
@@ -144,14 +152,7 @@ lvgl:
             shadow_width: 4
             shadow_color: ${color_shadow}
 
-        - label:
-            text: "Speed"
-            x: 400
-            y: 65
-            text_font: montserrat_16
-            text_color: ${color_muted}
-            # shadow_width: 2
-            # shadow_color: ${color_shadow}
+    
         - button:
             id: fan_btn_toggle
             x: 200
