@@ -118,7 +118,7 @@ display:
 globals:
   - id: fan_rotation_angle
     type: float
-    initial_value: 0
+    initial_value: "0"
 
 interval:
   - interval: 50ms
