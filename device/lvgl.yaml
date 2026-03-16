@@ -122,14 +122,12 @@ lvgl:
                 - lvgl.label.update:
                     id: fan_speed_label
                     text: !lambda |-
-                      if (isnan(x)) return std::string("--");
                       return std::to_string((int)x) + "%";
             on_release:
               then:
-                - lambda: |-
-                    // Map slider value (0–100) to fan speed (0–3)
-                    int speed = (int)(x / 33.34);
-                    if (speed > 3) speed = 3;  // Cap at 3
+                - logger.log:
+                    format: "Fan slider released: %.0f%%"
+                    args: [x]
                 - homeassistant.service:
                     service: fan.set_percentage
                     data:
@@ -189,7 +187,7 @@ lvgl:
 # ─── Animation interval ───────────────────────────────────
 # Runs every 40 ms (~25 fps). Advances angle only while fan is ON.
 interval:
-  - interval: 40ms
+  - interval: 10ms
     then:
       - if:
           condition:
