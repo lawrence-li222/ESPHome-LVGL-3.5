@@ -109,22 +109,15 @@ lvgl:
             
             # Optional: Add padding for the knob
             pad_all: 10
+            on_value:
+              then:
+                - homeassistant.service:
+                    service: fan.set_percentage
+                    data:
+                      entity_id: ${fan}
+                      percentage: !lambda return x;
 
-            # animated fan icon when on
-            # on_value_changed:
-            #   - if:
-            #       condition:
-            #         lambda: 'return id(fan_speed_slider).get_value() > 0;'
-            #       then:
-            #         - lvgl.animation.set_duration:
-            #             id: fan_rotation
-            #             duration: !lambda 'return 1000.0 / (id(fan_speed_slider).get_value() / 10.0);'
-            #         - lvgl.animation.start:
-            #             id: fan_rotation
-            #       else:
-            #         - lvgl.animation.stop:
-            #             id: fan_rotation
-
+        
         # ── Speed readout ────────────────────────────────────────────────────
         - label:
             id: office_ceiling_fan_speed_label
@@ -146,53 +139,34 @@ lvgl:
             text_color: ${color_muted}
             # shadow_width: 2
             # shadow_color: ${color_shadow}
-            
+
+        # ── Animated Fan Icon ─────────────────────────────────────────────────
         - label:
             id: fan_icon
             text: ${fan}
+            x: 20
+            y: 50
             text_font: icon_font
-            x: 30
-            y: 270
             text_color: ${color_accent}
-            
-        
-        # =========================================================================
-        # BUTTON: Dimmed Scene
-        # =========================================================================
-        # WHAT THIS BUTTON DOES:
-        #   Activates the "Dimmed" lighting scene - very low light levels,
-        #   useful for watching movies or reducing eye strain at night.
-        #
-        # WHEN PRESSED:
-        #   Calls Home Assistant service: switch.toggle
-        #   Target: switch.office_dimmed_stateful_scene
-        #
-        # HOW THE BUTTON KNOWS IF IT'S ACTIVE:
-        #   sensors.yaml monitors: switch.office_dimmed_stateful_scene
-        #   When that sensor is ON, this button appears "checked" (highlighted)
-        # =========================================================================
-        # - button: 
-        #     height: $button_height_single
-        #     width: $button_width
-        #     checkable: true
-        #     id: office_scene_dimmed_button
-        #     styles: control
-        #     grid_cell_column_pos: 0
-        #     grid_cell_row_pos: 1
-        #     widgets:
-        #       - label:
-        #           text_font: $icon_font
-        #           align: top_left
-        #           id: office_scene_dimmed_icon                
-        #           text: $nightlight
-        #       - label:
-        #           align: bottom_left
-        #           id: office_scene_dimmed_label
-        #           text: "Dimmed"
-        #     on_press:
-        #       - homeassistant.service:
-        #           service: switch.toggle
-        #           data:
-        #             entity_id: switch.office_dimmed_stateful_scene
+            shadow_width: 4
+            shadow_color: ${color_shadow}
+            on_click:
+              then:
+                - homeassistant.service:
+                    service: fan.toggle
+                    data:
+                      entity_id: ${fan}
 
+  animations:
+    - id: fan_rotation
+      widget: fan_icon
+      property: rotation
+      start_value: 0
+      end_value: 360
+      duration: 1000
+      repeat: true
+      direction: normal
+      path: linear
+      delay: 0
+            
        

@@ -39,3 +39,41 @@
 # =============================================================================
 
 sensor:
+  - platform: homeassistant
+    id: fan_percentage
+    entity_id: ${fan}
+    attribute: percentage
+    on_value:
+      then:
+        - lvgl.widget.update:
+            id: office_ceiling_fan_speed_label
+            text: !lambda return std::to_string(int(x)) + "%";
+        - lvgl.widget.update:
+            id: fan_speed_slider
+            value: !lambda return x;
+    trigger_on_initial_state: true
+
+# =============================================================================
+# BINARY SENSORS (On/Off States)
+# =============================================================================
+# These sensors read boolean (true/false) states like switch positions.
+# They're used to update button colors and states on the touchscreen.
+# =============================================================================
+
+binary_sensor:
+  - platform: homeassistant
+    id: fan_state
+    entity_id: ${fan}
+    on_state:
+      then:
+        - lvgl.animation.start: fan_rotation
+        - lvgl.widget.update:
+            id: fan_icon
+            text_color: ${color_accent}
+    on_state_off:
+      then:
+        - lvgl.animation.stop: fan_rotation
+        - lvgl.widget.update:
+            id: fan_icon
+            text_color: ${color_muted}
+    trigger_on_initial_state: true
