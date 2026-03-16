@@ -69,14 +69,17 @@ binary_sensor:
     entity_id: ${fan}
     on_state:
       then:
-        - lvgl.animation.start: fan_rotation
-        - lvgl.widget.update:
-            id: fan_icon
-            text_color: ${color_accent}
-    on_state_off:
-      then:
-        - lvgl.animation.stop: fan_rotation
-        - lvgl.widget.update:
-            id: fan_icon
-            text_color: ${color_muted}
-    trigger_on_initial_state: true
+        - if:
+            condition:
+              binary_sensor.is_on: fan_state
+            then:
+              - lvgl.animation.start: fan_rotation
+              - lvgl.widget.update:
+                  id: fan_icon
+                  text_color: ${color_accent}
+            else:
+              - lvgl.animation.stop: fan_rotation
+              - lvgl.widget.update:
+                  id: fan_icon
+                  text_color: ${color_muted}
+       
