@@ -90,18 +90,7 @@ lvgl:
       # pad_right: 5
       
       widgets:
-        - label:
-            id: fan_icon_lbl
-            x: 10
-            y: 45
-            text: "\U000F0210"       # mdi:fan glyph
-            text_font: mdi_56
-            text_color: 0x546E7A    # starts grey (off)
-            # Pivot at icon centre so it spins in place
-            transform_pivot_x: 28
-            transform_pivot_y: 28
-            transform_angle: 0
-
+       
         - slider:
             id: fan_speed_slider
             width: 50%
@@ -191,6 +180,18 @@ lvgl:
                           service: fan.turn_on
                           data:
                             entity_id: ${ceiling_fan}
+              widgets:
+                - label:
+                    id: fan_icon_lbl
+                    align: CENTER
+                    text: "\U000F0210"       # mdi:fan glyph
+                    text_font: mdi_56
+                    text_color: 0x546E7A    # starts grey (off)
+                    # Pivot at icon centre so it spins in place
+                    transform_pivot_x: 28
+                    transform_pivot_y: 28
+                    transform_angle: 0
+
 
 # ─── Animation interval ───────────────────────────────────
 # Runs every 40 ms (~25 fps). Advances angle only while fan is ON.
