@@ -197,14 +197,4 @@ lvgl:
         #           data:
         #             entity_id: switch.office_dimmed_stateful_scene
 
-  animations:
-    - id: fan_rotation
-      widget: fan_icon
-      property: rotation
-      start_value: 0
-      end_value: 360
-      duration: 1000
-      repeat: true
-      direction: forward
-
        

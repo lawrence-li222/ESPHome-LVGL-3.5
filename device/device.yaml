@@ -114,3 +114,27 @@ display:
     data_rate: 40MHz
     update_interval: never
     auto_clear_enabled: false
+
+globals:
+  - id: fan_rotation_angle
+    type: float
+    initial_value: 0.0
+
+interval:
+  - interval: 50ms
+    then:
+      - if:
+          condition:
+            lambda: 'return id(fan_speed_slider).get_value() > 0;'
+          then:
+            - lambda: 'id(fan_rotation_angle) += id(fan_speed_slider).get_value() * 0.5; if (id(fan_rotation_angle) >= 360) id(fan_rotation_angle) -= 360;'
+            - lvgl.widget.set_property:
+                id: fan_icon
+                property: rotation
+                value: !lambda 'return id(fan_rotation_angle);'
+          else:
+            - lambda: 'id(fan_rotation_angle) = 0;'
+            - lvgl.widget.set_property:
+                id: fan_icon
+                property: rotation
+                value: 0
