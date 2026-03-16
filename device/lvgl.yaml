@@ -82,15 +82,7 @@ lvgl:
       # pad_right: 5
       
       widgets:
-
-        - label:
-          id: fan_icon
-          text: ${fan}
-          text_font: icon_font
-          x: 160
-          y: 20
-          text_color: ${color_accent}
-
+       
         - slider:
             id: fan_speed_slider
             width: 50%
@@ -155,7 +147,13 @@ lvgl:
             # shadow_width: 2
             # shadow_color: ${color_shadow}
             
-       
+        - label:
+            id: fan_icon
+            text: ${fan}
+            text_font: icon_font
+            x: 30
+            y: 70
+            text_color: ${color_accent}
             
         
         # =========================================================================
