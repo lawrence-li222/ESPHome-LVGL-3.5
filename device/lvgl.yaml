@@ -92,7 +92,7 @@ lvgl:
       widgets:
 
         - label:
-            text: "Fan peed"
+            text: "Fan Speed"
             x: 30
             y: 80
             text_font: montserrat_16
@@ -143,7 +143,7 @@ lvgl:
         - label:
             id: fan_speed_label
             text: "0%"
-            x: 400
+            x: 420
             y: 76
             text_font: montserrat_18
             text_color: ${color_accent}
@@ -155,7 +155,7 @@ lvgl:
     
         - button:
             id: fan_btn_toggle
-            x: 200
+            x: 30
             y: 150
             height: $button_height_single
             width: $button_width

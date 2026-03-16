@@ -1,0 +1,61 @@
+substitutions:
+  weather_entity: weather.forecast_home
+
+sensor:
+  - platform: homeassistant
+    id: ha_weather
+    entity_id: ${weather_entity}
+    attribute: temperature
+    on_value:
+      - lvgl.label.update:
+          id: weather_temp_lbl
+          text: !lambda |-
+            if (isnan(x)) return std::string("--°C");
+            return std::to_string((int)x) + "°C";
+  
+  # ── Weather: condition (text state) ───────────────────────
+# Text states aren't sensors – use a text_sensor instead
+text_sensor:
+  - platform: homeassistant
+    id: ha_weather_condition
+    entity_id: ${weather_entity}                # ← your weather entity
+    on_value:
+      # Store the raw condition string
+      - lambda: id(weather_condition) = x.c_str();
+      # Map HA condition → MDI glyph and colour
+      - lambda: |-
+          struct WeatherMap {
+            const char* condition;
+            const char* glyph;
+            lv_color_t  color;
+          };
+          static const WeatherMap wmap[] = {
+            { "clear-night",           "\U000F0594", lv_color_hex(0x7986CB) },
+            { "cloudy",                "\U000F0590", lv_color_hex(0x90A4AE) },
+            { "exceptional",           "\U000F059C", lv_color_hex(0xEF5350) },
+            { "fog",                   "\U000F0591", lv_color_hex(0xB0BEC5) },
+            { "hail",                  "\U000F0592", lv_color_hex(0x80DEEA) },
+            { "lightning",             "\U000F0593", lv_color_hex(0xFFD54F) },
+            { "lightning-rainy",       "\U000F067E", lv_color_hex(0xFFD54F) },
+            { "partlycloudy",          "\U000F0595", lv_color_hex(0x90CAF9) },
+            { "partly-lightning",      "\U000F0F37", lv_color_hex(0xFFD54F) },
+            { "partly-rainy",          "\U000F0F38", lv_color_hex(0x64B5F6) },
+            { "partly-snowy",          "\U000F0F35", lv_color_hex(0xE0F7FA) },
+            { "partly-snowy-rainy",    "\U000F0F34", lv_color_hex(0xB3E5FC) },
+            { "pouring",               "\U000F0596", lv_color_hex(0x42A5F5) },
+            { "rainy",                 "\U000F0597", lv_color_hex(0x64B5F6) },
+            { "snowy",                 "\U000F0598", lv_color_hex(0xE3F2FD) },
+            { "snowy-rainy",           "\U000F067F", lv_color_hex(0xB3E5FC) },
+            { "sunny",                 "\U000F0599", lv_color_hex(0xFFD54F) },
+            { "tornado",               "\U000F059B", lv_color_hex(0xCE93D8) },
+            { "windy",                 "\U000F059D", lv_color_hex(0x80CBC4) },
+            { "windy-variant",         "\U000F059E", lv_color_hex(0x80CBC4) },
+          };
+          const char* glyph = "\U000F0595";           // default: partly-cloudy
+          lv_color_t col = lv_color_hex(0x90A4AE);
+          for (auto& m : wmap) {
+            if (x == m.condition) { glyph = m.glyph; col = m.color; break; }
+          }
+          auto *obj = id(weather_icon_lbl);
+          lv_label_set_text(obj, glyph);
+          lv_obj_set_style_text_color(obj, col, LV_PART_MAIN | LV_STATE_DEFAULT);
