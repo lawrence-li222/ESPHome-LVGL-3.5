@@ -84,8 +84,8 @@ lvgl:
       widgets:
         - label:
             id: fan_icon_lbl
-            x: 30
-            y: 200
+            x: 10
+            y: 70
             text: "\U000F0210"       # mdi:fan glyph
             text_font: mdi_56
             text_color: 0x546E7A    # starts grey (off)
@@ -117,9 +117,24 @@ lvgl:
               radius: 14
               shadow_width: 8
               shadow_color: ${color_accent}
-            
-            # Optional: Add padding for the knob
-            pad_all: 10
+            on_value:
+              then:
+                - lvgl.label.update:
+                    id: fan_speed_label
+                    text: !lambda |-
+                      if (isnan(x)) return std::string("--");
+                      return std::to_string((int)x) + "%";
+            on_release:
+              then:
+                - lambda: |-
+                    // Map slider value (0–100) to fan speed (0–3)
+                    int speed = (int)(x / 33.34);
+                    if (speed > 3) speed = 3;  // Cap at 3
+                - homeassistant.service:
+                    service: fan.set_percentage
+                    data:
+                      entity_id: ${ceiling_fan}          # ← same entity as in sensors.yaml
+                      percentage: !lambda "return (int)x;"
                 
         # ── Speed readout ────────────────────────────────────────────────────
         - label:
@@ -142,6 +157,34 @@ lvgl:
             text_color: ${color_muted}
             # shadow_width: 2
             # shadow_color: ${color_shadow}
+        - button:
+            id: fan_btn_toggle
+            x: 200
+            y: 150
+            width: 120
+            height: 36
+            bg_color: ${color_btn_on}
+            radius: 18
+            widgets:
+              - label:
+                  text: "  Fan On"
+                  text_color: ${color_white}
+                  text_font: montserrat_14
+            on_click:
+              then:
+                - if:
+                  condition:
+                    binary_sensor.is_on: ha_fan_state
+                  then:
+                    - homeassistant.service:
+                        service: fan.turn_off
+                        data:
+                          entity_id: ${ceiling_fan}
+                  else:
+                    - homeassistant.service:
+                        service: fan.turn_on
+                        data:
+                          entity_id: ${ceiling_fan}
 
 # ─── Animation interval ───────────────────────────────────
 # Runs every 40 ms (~25 fps). Advances angle only while fan is ON.
