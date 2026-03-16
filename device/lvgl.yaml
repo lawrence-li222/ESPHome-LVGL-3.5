@@ -88,7 +88,7 @@ lvgl:
             width: 50%
             height: 12
             x: 50
-            y: 40
+            y: 70
             min_value: 0
             max_value: 100
             value: 0
@@ -116,7 +116,7 @@ lvgl:
             text: "0%"
             align: CENTER
             y: -20
-            text_font: montserrat_48
+            text_font: montserrat_18
             text_color: ${color_accent}
             bg_color: 0x000000
             bg_opa: 50%
