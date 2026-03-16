@@ -106,6 +106,7 @@ display:
   - platform: mipi_spi
     id: tft_display
     model: JC3248W535
+    rotation: 90
     data_rate: 40MHz
     update_interval: never
     auto_clear_enabled: false
