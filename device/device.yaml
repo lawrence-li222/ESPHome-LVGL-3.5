@@ -100,7 +100,12 @@ i2c:
 touchscreen:
   - platform: axs15231
     id: tft_touch
-    #display: tft_display
+    transform:
+      swap_xy: true
+      mirror_x: true
+      mirror_y: false
+    display: tft_display
+    i2c_id: touchscreen_bus
 
 display:
   - platform: mipi_spi
