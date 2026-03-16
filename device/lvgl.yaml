@@ -152,7 +152,7 @@ lvgl:
             text: ${fan}
             text_font: icon_font
             x: 30
-            y: 70
+            y: 270
             text_color: ${color_accent}
             
         
