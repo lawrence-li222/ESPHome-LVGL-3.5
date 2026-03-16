@@ -12,3 +12,18 @@ packages:
 
 substitutions:
   weather_entity: weather.forecast_home
+  ceiling_fan: fan.office_ceiling_fan 
+
+api:
+  # Fires every time HA API reconnects (covers reboots + wifi drops)
+  on_client_connected:
+    - logger.log: "HA connected – requesting full entity refresh"
+    - delay: 1s
+    - homeassistant.service:
+        service: homeassistant.update_entity
+        data:
+          entity_id: ${weather_entity}
+    - homeassistant.service:
+        service: homeassistant.update_entity
+        data:
+          entity_id: ${fan_entity}
