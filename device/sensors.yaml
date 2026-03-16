@@ -1,5 +1,5 @@
 substitutions:
-  ceiling_fan: fan.guest_bedroom_left_ceilng_fan      # must match ha_fan.yaml
+  ceiling_fan: fan.office_ceiling_fan      # must match ha_fan.yaml
   
 # ─── Home Assistant sensors ───────────────────────────────
 binary_sensor:
