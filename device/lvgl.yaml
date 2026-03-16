@@ -1,21 +1,20 @@
-# =============================================================================
-# LVGL TOUCHSCREEN INTERFACE
-# =============================================================================
-# This file defines the graphical user interface (GUI) for the ESP32 touchscreen
-# display. It creates buttons that control smart home devices through Home Assistant.
-#
-# HOW IT WORKS:
-# - Each button sends a command to Home Assistant when pressed (on_press/on_click)
-# - Buttons receive state updates from sensors defined in sensors.yaml
-# - When a sensor changes, the button's appearance updates (checked/unchecked)
-#
-# KEY CONCEPTS:
-# - "id:" is a unique name used to reference this element from other files
-# - "entity_id:" refers to a device/entity in Home Assistant
-# - "checkable: true" means the button shows on/off state visually
-# - "$variable" values (like $button_width) are defined in template.yaml
-# - Sensors in sensors.yaml watch Home Assistant and update button states
-# =============================================================================
+substitutions:
+  fan: fan.guest_bedroom_left_ceilng_fan      # must match ha_fan.yaml
+
+  # ── Colours (tweak here, applied everywhere) ──────────────────────────────
+  color_bg:         "0x0D0D1A"
+  color_header:     "0x1A1A2E"
+  color_accent:     "0x00BFFF"
+  color_track:      "0x2A2A3E"
+  color_knob:       "0xFFFFFF"
+  color_btn_preset: "0x1E3A5F"
+  color_btn_on:     "0x007700"
+  color_btn_off:    "0xCC3300"
+  color_dot_off:    "0x444444"
+  color_muted:      "0x888888"
+  color_subtle:     "0xAAAAAA"
+  color_white:      "0xFFFFFF"
+  color_shadow:     "0xA6A6A6"
 
 lvgl:
   buffer_size: 100%
@@ -86,24 +85,52 @@ lvgl:
       
         - slider:
             id: fan_speed_slider
-            width: 20
-            height: 180
+            width: 50%
+            height: 12
             x: 50
-            y: 70
-            styles: control
-            radius: 0
-            indicator:
-              radius: 0
-              bg_opa: 50%
-            knob:
-                radius: 1
-                width: 4
-                height: 160
+            y: 40
             min_value: 0
             max_value: 100
-            value: 50
+            value: 0
+            bg_color: ${color_track}
+            radius: 6
+            shadow_width: 4
+            shadow_color: ${color_shadow}
+            indicator:
+              bg_color: ${color_accent}
+              radius: 6
+            knob:
+              bg_color: ${color_knob}
+              width: 28
+              height: 28
+              radius: 14
+              shadow_width: 8
+              shadow_color: ${color_accent}
+            
             # Optional: Add padding for the knob
             pad_all: 10
+
+        # ── Speed readout ────────────────────────────────────────────────────
+        - label:
+            id: office_ceiling_fan_speed_label
+            text: "0%"
+            align: CENTER
+            y: -20
+            text_font: montserrat_48
+            text_color: ${color_accent}
+            bg_color: 0x000000
+            bg_opa: 50%
+            shadow_width: 4
+            shadow_color: ${color_shadow}
+
+        - label:
+            text: "Speed"
+            align: CENTER
+            y: 40
+            text_font: montserrat_16
+            text_color: ${color_muted}
+            shadow_width: 2
+            shadow_color: ${color_shadow}
             
         
         # =========================================================================
