@@ -89,7 +89,7 @@ lvgl:
             width: 20
             height: 180
             x: 50
-            y: 90
+            y: 70
             styles: control
             radius: 0
             indicator:
