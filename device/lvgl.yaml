@@ -114,8 +114,8 @@ lvgl:
         - label:
             id: office_ceiling_fan_speed_label
             text: "0%"
-            align: CENTER
-            y: -20
+            x: 300
+            y: 70
             text_font: montserrat_18
             text_color: ${color_accent}
             bg_color: 0x000000
