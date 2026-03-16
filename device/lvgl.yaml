@@ -9,7 +9,7 @@ substitutions:
   color_knob:       "0xFFFFFF"
   color_btn_preset: "0x1E3A5F"
   color_btn_on:     "0x007700"
-  color_btn_off:    "0x999999"
+  color_btn_off:    "0x333333"
   color_dot_off:    "0x444444"
   color_muted:      "0x888888"
   color_subtle:     "0xAAAAAA"
