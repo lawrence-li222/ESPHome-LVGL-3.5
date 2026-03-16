@@ -98,7 +98,7 @@ lvgl:
             knob:
                 radius: 1
                 width: 4
-                height: 120%
+                height: 260
             min_value: 0
             max_value: 100
             value: 50
