@@ -87,7 +87,7 @@ lvgl:
         - slider:
             id: fan_speed_slider
             width: 20
-            height: 280
+            height: 180
             x: 50
             y: 90
             styles: control
@@ -98,7 +98,7 @@ lvgl:
             knob:
                 radius: 1
                 width: 4
-                height: 260
+                height: 160
             min_value: 0
             max_value: 100
             value: 50
