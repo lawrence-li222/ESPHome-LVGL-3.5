@@ -37,3 +37,5 @@ sensor:
           text: !lambda |-
             if (isnan(x)) return std::string("--");
             return std::to_string((int)x) + "%";
+
+   

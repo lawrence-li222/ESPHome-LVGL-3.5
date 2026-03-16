@@ -126,3 +126,9 @@ globals:
     type: bool
     restore_value: no
     initial_value: "false"
+
+  # Stores the current weather condition string from HA
+  - id: weather_condition
+    type: std::string
+    restore_value: no
+    initial_value: '"unknown"'

@@ -38,12 +38,20 @@ lvgl:
       # =========================================================================
       - label:
           text: "-° / -°"
-          id: temperatures
+          id: weather_temp_lbl
           styles: roboto15_style
           align: top_left
           x: 8
           y: 4
           text_color: 0xFFFFFF
+
+      - label:
+          id: weather_icon_lbl
+          align: TOP_MID
+          y: 6
+          text: "\U000F0595"        # default: partly-cloudy
+          text_font: mdi_48
+          text_color: 0x90CAF9
 
       # =========================================================================
       # CLOCK DISPLAY (Top-center of screen)
@@ -59,7 +67,7 @@ lvgl:
           text: "--:--"
           id: display_time
           styles: roboto15_style
-          align: top_mid
+          align: TOP_RIGHT
           x: 0
           y: 4
           text_align: center
@@ -139,7 +147,7 @@ lvgl:
             id: fan_speed_label
             text: "0%"
             x: 340
-            y: 65
+            y: 70
             text_font: montserrat_18
             text_color: ${color_accent}
             bg_color: 0x000000
