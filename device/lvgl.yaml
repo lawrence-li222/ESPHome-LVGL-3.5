@@ -173,18 +173,18 @@ lvgl:
             on_click:
               then:
                 - if:
-                  condition:
-                    binary_sensor.is_on: ha_fan_state
-                  then:
-                    - homeassistant.service:
-                        service: fan.turn_off
-                        data:
-                          entity_id: ${ceiling_fan}
-                  else:
-                    - homeassistant.service:
-                        service: fan.turn_on
-                        data:
-                          entity_id: ${ceiling_fan}
+                    condition:
+                      binary_sensor.is_on: ha_fan_state
+                    then:
+                      - homeassistant.service:
+                          service: fan.turn_off
+                          data:
+                            entity_id: ${ceiling_fan}
+                    else:
+                      - homeassistant.service:
+                          service: fan.turn_on
+                          data:
+                            entity_id: ${ceiling_fan}
 
 # ─── Animation interval ───────────────────────────────────
 # Runs every 40 ms (~25 fps). Advances angle only while fan is ON.
