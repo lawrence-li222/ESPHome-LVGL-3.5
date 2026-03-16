@@ -16,6 +16,7 @@ binary_sensor:
             - lvgl.widget.update:
                 id: fan_icon_lbl
                 text_color: 0x29B6F6
+
             - lvgl.widget.update:
                 id: fan_btn_toggle
                 bg_color: ${color_btn_on}
@@ -38,6 +39,14 @@ binary_sensor:
             - lvgl.label.update:
                 id: fan_btn_state_lbl
                 text: "  Fan Off"
+            - lvgl.slider.update:
+                id: fan_speed_slider
+                value: !lambda 'return x;'
+            - lvgl.label.update:
+                id: fan_speed_label
+                text: !lambda |-
+                  if (isnan(x)) return std::string("--");
+                  return std::to_string((int)x) + "%";
             
 sensor:
   - platform: homeassistant
