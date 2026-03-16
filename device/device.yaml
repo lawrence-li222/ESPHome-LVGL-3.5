@@ -102,7 +102,7 @@ touchscreen:
     id: tft_touch
     transform:
       swap_xy: true
-      mirror_x: true
+      mirror_x: false
       mirror_y: false
     display: tft_display
 
