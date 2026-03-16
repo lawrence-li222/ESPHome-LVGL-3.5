@@ -125,10 +125,10 @@ interval:
     then:
       - if:
           condition:
-            lambda: 'return lv_slider_get_value(id(fan_speed_slider)->obj) > 0;'
+            lambda: 'return lv_slider_get_value(id(fan_speed_slider)) > 0;'
           then:
-            - lambda: 'id(fan_rotation_angle) += lv_slider_get_value(id(fan_speed_slider)->obj) * 0.5; if (id(fan_rotation_angle) >= 360) id(fan_rotation_angle) -= 360;'
-            - lambda: 'lv_obj_set_style_transform_rotation(id(fan_icon)->obj, id(fan_rotation_angle), LV_PART_MAIN);'
+            - lambda: 'id(fan_rotation_angle) += lv_slider_get_value(id(fan_speed_slider)) * 0.5; if (id(fan_rotation_angle) >= 360) id(fan_rotation_angle) -= 360;'
+            - lambda: 'lv_obj_set_style_transform_angle(id(fan_icon), id(fan_rotation_angle), LV_PART_MAIN);'
           else:
             - lambda: 'id(fan_rotation_angle) = 0;'
-            - lambda: 'lv_obj_set_style_transform_rotation(id(fan_icon)->obj, 0, LV_PART_MAIN);'
+            - lambda: 'lv_obj_set_style_transform_angle(id(fan_icon), 0, LV_PART_MAIN);'
