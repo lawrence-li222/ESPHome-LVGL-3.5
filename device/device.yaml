@@ -105,7 +105,6 @@ touchscreen:
       mirror_x: true
       mirror_y: false
     display: tft_display
-    i2c_id: touchscreen_bus
 
 display:
   - platform: mipi_spi
