@@ -1,3 +1,6 @@
+substitutions:
+  fan: fan.guest_bedroom_left_ceilng_fan      # must match ha_fan.yaml
+  
 # =============================================================================
 # SENSORS - Home Assistant State Synchronization
 # =============================================================================
@@ -45,7 +48,7 @@ sensor:
     attribute: percentage
     on_value:
       then:
-        - lvgl.widget.update:
+        - lvgl.label.update:
             id: office_ceiling_fan_speed_label
             text: !lambda return std::to_string(int(x)) + "%";
         - lvgl.widget.update:
