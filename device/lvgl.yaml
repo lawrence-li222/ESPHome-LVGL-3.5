@@ -54,9 +54,7 @@ lvgl:
         type: grid
         grid_columns: [fr(1), fr(1), fr(1)]
         grid_rows: [fr(1), fr(1), fr(1)]
-      # scrollbar_mode: "off"
-      # scroll_dir: "hor"
-      # width: 100%
+      pad_top: 45
       bg_color: Black
       
       widgets:
