@@ -232,7 +232,7 @@ lvgl:
                     service: light.turn_on
                     data:
                       entity_id: ${yellow_light}          # ← same entity as in sensors.yaml
-                      brightness: !lambda "return x;"
+                      brightness: !lambda "return (int)x;"
                 
         # ── light readout ────────────────────────────────────────────────────
         - label:
