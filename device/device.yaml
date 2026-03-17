@@ -115,18 +115,20 @@ touchscreen:
     display: tft_display
     on_touch:
       - lambda: |-
-          id(last_interaction) = millis();  // reset idle timer
-
-          if (id(is_sleeping)) {
-            id(is_sleeping) = false;
-
-            // restore backlight
-            auto call = id(display_backlight).turn_on();
-            call.perform();
-
-            // show screen again
-            lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_HIDDEN);
-          }
+          id(last_interaction) = millis();
+      - if:
+          condition:
+            lambda: 'return id(is_sleeping);'
+          then:
+            - logger.log: "Touch detected — waking"
+            - lambda: |-
+                id(is_sleeping) = false;
+                lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_HIDDEN);
+                // tell LVGL user is active again
+                lv_disp_trig_activity(NULL);
+            - light.turn_on:
+                id: display_backlight
+                brightness: 100%
     on_release:
       - lambda: |-
           id(last_interaction) = millis();  // also reset on release

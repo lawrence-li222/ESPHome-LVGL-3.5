@@ -206,7 +206,7 @@ lvgl:
             width: 50%
             height: 12
             min_value: 0
-            max_value: 100
+            max_value: 255
             value: 0
             bg_color: ${color_track}
             radius: 6
@@ -302,7 +302,7 @@ lvgl:
             width: 50%
             height: 12
             min_value: 0
-            max_value: 100
+            max_value: 255
             value: 0
             bg_color: ${color_track}
             radius: 6

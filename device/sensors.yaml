@@ -133,7 +133,7 @@ sensor:
             id: w_light_brightness_slider
             value: !lambda |- 
               if(isnan(x)) return 0;
-              return x;   
+              return (x/ 1000) * 255;   
         - lvgl.label.update:
             id: w_light_brightness_label
             text: !lambda |-
