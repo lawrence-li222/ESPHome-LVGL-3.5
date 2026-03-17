@@ -45,7 +45,7 @@ binary_sensor:
     id: y_light_state
     entity_id: ${yellow_light}          # ← change to your light entity
     on_state:
-      - lambda: id(y_light_on) = x;
+      #- lambda: id(y_light_on) = x;
       - if:
           condition:
             lambda: return x;
