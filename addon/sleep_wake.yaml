@@ -1,0 +1,23 @@
+# ============================================================
+# INTERVAL — Check inactivity every 30 seconds
+# ============================================================
+interval:
+  - interval: 10s
+    then:
+      - lambda: |-
+          uint32_t idle = millis() - id(last_interaction);
+
+          // Step 1 — dim after 4 min
+          if (!id(is_sleeping) && idle > 240000 && idle < 300000) {
+            auto call = id(display_backlight).make_call();
+            call.set_brightness(0.1f);  // 10% dim warning
+            call.perform();
+          }
+
+          // Step 2 — sleep after 5 min
+          if (!id(is_sleeping) && idle >= 300000) {
+            id(is_sleeping) = true;
+            auto call = id(display_backlight).turn_off();
+            call.perform();
+            lv_obj_add_flag(lv_scr_act(), LV_OBJ_FLAG_HIDDEN);
+          }

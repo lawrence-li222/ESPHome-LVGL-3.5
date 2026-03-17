@@ -9,6 +9,7 @@ packages:
   icons: !include assets/icons.yaml
   button: !include theme/button.yaml
   weather: !include addon/weather.yaml
-  
+  sleep_wake: !include addon/sleep_wake.yaml
+
 substitutions:
   ceiling_fan: fan.office_ceiling_fan 

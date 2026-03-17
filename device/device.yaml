@@ -87,6 +87,14 @@ output:
     id: backlight_output
     pin: 1
 
+light:
+  - platform: monochromatic
+    id: display_backlight
+    name: "Display Backlight"
+    output: backlight_output
+    default_transition_length: 500ms    # smooth fade in/out
+    restore_mode: ALWAYS_ON
+
 spi:
   - id: lcd_spi
     type: quad
@@ -105,6 +113,23 @@ touchscreen:
       mirror_x: false
       mirror_y: true
     display: tft_display
+    on_touch:
+      - lambda: |-
+          id(last_interaction) = millis();  // reset idle timer
+
+          if (id(is_sleeping)) {
+            id(is_sleeping) = false;
+
+            // restore backlight
+            auto call = id(display_backlight).turn_on();
+            call.perform();
+
+            // show screen again
+            lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_HIDDEN);
+          }
+    on_release:
+      - lambda: |-
+          id(last_interaction) = millis();  // also reset on release
 
 display:
   - platform: mipi_spi
@@ -132,3 +157,13 @@ globals:
     type: std::string
     restore_value: no
     initial_value: '"unknown"'
+
+  - id: last_interaction
+    type: uint32_t
+    restore_value: no
+    initial_value: '0'
+
+  - id: is_sleeping
+    type: bool
+    restore_value: no
+    initial_value: 'false'
