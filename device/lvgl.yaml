@@ -227,7 +227,7 @@ lvgl:
                 - lvgl.label.update:
                     id: y_light_brightness_label
                     text: !lambda |-
-                      return std::to_string((int)x) + "%";
+                      return std::to_string(round((int)x/255.0 * 100)) + "%";
             on_release:
               then:
                 - lambda: id(last_interaction) = millis(); 
@@ -323,7 +323,7 @@ lvgl:
                 - lvgl.label.update:
                     id: w_light_brightness_label
                     text: !lambda |-
-                      return std::to_string((int)x) + "%";
+                      return std::to_string(round((int)x/255.0 * 100)) + "%";
             on_release:
               then:
                 - lambda: id(last_interaction) = millis();
