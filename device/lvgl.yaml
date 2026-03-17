@@ -54,7 +54,9 @@ lvgl:
         type: grid
         grid_columns: [fr(1), fr(3), fr(1)]
         grid_rows: [fr(1), fr(1), fr(1)]
-      pad_top: 45
+      pad_top: 50
+      pad_left: 20
+      pad_right: 20
       bg_color: Black
       
       widgets:
@@ -101,7 +103,8 @@ lvgl:
             id: fan_speed_slider
             grid_cell_column_pos: 1
             grid_cell_row_pos: 0
-            align: CENTER
+            grid_cell_x_align: CENTER
+            grid_cell_y_align: CENTER
             width: 50%
             height: 12
             min_value: 0
@@ -143,7 +146,8 @@ lvgl:
             id: fan_speed_label
             grid_cell_column_pos: 2
             grid_cell_row_pos: 0
-            align: CENTER
+            grid_cell_x_align: CENTER
+            grid_cell_y_align: CENTER
             text: "0%"
             text_font: montserrat_18
             text_color: ${color_accent}
