@@ -1,7 +1,7 @@
 substitutions:
-  ceiling_fan: fan.office_ceiling_fan      # must match ha_fan.yaml
-  yellow_light: light.office_ceiling_light_yellow   # must match ha_yellow_light.yaml
-  white_light: light.office_ceiling_light_white   # must match ha_white_light.yaml
+  ceiling_fan: fan.guest_bedroom_left_ceilng_fan      # must match ha_fan.yaml
+  yellow_light: light.guest_bedroom_left_ceiling_light_yellow   # must match ha_yellow_light.yaml
+  white_light: light.guest_bedroom_left_ceiling_light_white   # must match ha_white_light.yaml
 # ─── Home Assistant sensors ───────────────────────────────
 binary_sensor:
   - platform: homeassistant
