@@ -121,7 +121,7 @@ sensor:
             id: y_light_brightness_label
             text: !lambda |-
               if (isnan(x)) return std::string("--");
-              return std::to_string((int)x) + "%";
+              return std::to_string(((int)x/255.0 * 100)) + "%";
 
   - platform: homeassistant
     id: w_light_brigfhtness
@@ -138,4 +138,4 @@ sensor:
             id: w_light_brightness_label
             text: !lambda |-
               if (isnan(x)) return std::string("--");
-              return std::to_string((int)x) + "%";
+              return std::to_string(((int)x/255.0 * 100)) + "%";

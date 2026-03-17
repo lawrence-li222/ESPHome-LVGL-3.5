@@ -12,4 +12,6 @@ packages:
   sleep_wake: !include addon/sleep_wake.yaml
 
 substitutions:
-  ceiling_fan: fan.office_ceiling_fan 
+  ceiling_fan: fan.guest_bedroom_left_ceilng_fan 
+  yellow_light: light.guest_bedroom_left_ceiling_light_yellow   # must match ha_yellow_light.yaml
+  white_light: light.guest_bedroom_left_ceiling_light_white   # must match ha_white_light.yaml

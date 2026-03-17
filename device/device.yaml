@@ -116,19 +116,21 @@ touchscreen:
     on_touch:
       - lambda: |-
           id(last_interaction) = millis();
-      - if:
-          condition:
-            lambda: 'return id(is_sleeping);'
-          then:
-            - logger.log: "Touch detected — waking"
-            - lambda: |-
-                id(is_sleeping) = false;
-                lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_HIDDEN);
-                // tell LVGL user is active again
-                lv_disp_trig_activity(NULL);
-            - light.turn_on:
-                id: display_backlight
-                brightness: 100%
+          lv_disp_trig_activity(NULL);
+
+          // wake regardless of LVGL state
+          if (id(is_sleeping)) {
+            id(is_sleeping) = false;
+
+            // show screen first
+            lv_obj_clear_flag(lv_scr_act(), LV_OBJ_FLAG_HIDDEN);
+          }
+
+      # turn on backlight OUTSIDE the if block — always restore
+      - light.turn_on:
+          id: display_backlight
+          brightness: 100%
+          transition_length: 300ms
     on_release:
       - lambda: |-
           id(last_interaction) = millis();  // also reset on release
