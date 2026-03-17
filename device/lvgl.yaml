@@ -181,7 +181,7 @@ lvgl:
               then:
                 - if:
                     condition:
-                      binary_sensor.is_on: ha_fan_state
+                      binary_sensor.is_on: y_light_state
                     then:
                       - homeassistant.service:
                           service: light.turn_off
@@ -232,7 +232,7 @@ lvgl:
                     service: light.turn_on
                     data:
                       entity_id: ${yellow_light}          # ← same entity as in sensors.yaml
-                      brightness: !lambda "return (int)x;"
+                      brightness: !lambda "return x;"
                 
         # ── light readout ────────────────────────────────────────────────────
         - label:
