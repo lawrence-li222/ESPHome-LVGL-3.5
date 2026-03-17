@@ -21,21 +21,6 @@ lvgl:
   top_layer:
     widgets:
     
-      # =========================================================================
-      # TEMPERATURE DISPLAY (Top-left corner of screen)
-      # =========================================================================
-      # WHAT IT SHOWS:
-      #   Displays two temperatures: "outdoor° / indoor°"
-      #   Example: "15° / 22°" means 15°C outside, 22°C in the office
-      #
-      # WHERE THE DATA COMES FROM (defined in sensors.yaml):
-      #   - Left number: sensor.outdoor_temperature (weather/outdoor sensor)
-      #   - Right number: sensor.office_temperature (indoor room sensor)
-      #
-      # HOW IT UPDATES:
-      #   When either temperature sensor changes in Home Assistant, the
-      #   sensors.yaml file triggers an update to this label's text.
-      # =========================================================================
       - label:
           text: "-° / -°"
           id: weather_temp_lbl
@@ -53,16 +38,6 @@ lvgl:
           text_font: mdi_48
           text_color: 0x90CAF9
 
-      # =========================================================================
-      # CLOCK DISPLAY (Top-center of screen)
-      # =========================================================================
-      # WHAT IT SHOWS:
-      #   Current time in 24-hour format (e.g., "14:30")
-      #
-      # WHERE THE DATA COMES FROM:
-      #   The time component (configured in addon/time.yaml) syncs with
-      #   Home Assistant's time and updates this label every minute.
-      # =========================================================================
       - label:
           text: "--:--"
           id: display_time
@@ -75,36 +50,63 @@ lvgl:
           
   pages:
     - id: main_page
-      # layout: 
-      #   type: grid
-      #   grid_columns: [fr(1), fr(1)]
-      #   grid_rows: [fr(1), fr(1), fr(1)]
+      layout: 
+        type: grid
+        grid_columns: [fr(1), fr(1), fr(1)]
+        grid_rows: [fr(1), fr(1), fr(1)]
       # scrollbar_mode: "off"
       # scroll_dir: "hor"
       # width: 100%
       bg_color: Black
-      # bg_opa: cover
-      # pad_top: 34
-      # pad_bottom: 5
-      # pad_left: 5
-      # pad_right: 5
       
       widgets:
-
-        - label:
-            text: "Fan Speed"
-            x: 30
-            y: 80
-            text_font: montserrat_16
-            text_color: ${color_muted}
-            # shadow_width: 2
-            # shadow_color: ${color_shadow}
+        - button:
+            id: fan_btn_toggle
+            grid_cell:
+              row: 0
+              column: 0
+            height: $button_height_single
+            width: $button_width
+            bg_color: ${color_btn_on}
+            radius: 18
+            widgets:
+              - label:
+                  id: fan_btn_state_lbl
+                  text: "  Fan On"
+                  text_color: ${color_white}
+                  text_font: montserrat_14
+              - label:
+                  id: fan_icon_lbl
+                  align: BOTTOM_CENTER
+                  text: "\U000F0210"       # mdi:fan glyph
+                  text_font: mdi_56
+                  text_color: 0x546E7A    # starts grey (off)
+                  # Pivot at icon centre so it spins in place
+                  transform_pivot_x: 28
+                  transform_pivot_y: 28
+                  transform_angle: 0
+            on_click:
+              then:
+                - if:
+                    condition:
+                      binary_sensor.is_on: ha_fan_state
+                    then:
+                      - homeassistant.service:
+                          service: fan.turn_off
+                          data:
+                            entity_id: ${ceiling_fan}
+                    else:
+                      - homeassistant.service:
+                          service: fan.turn_on
+                          data:
+                            entity_id: ${ceiling_fan}
         - slider:
             id: fan_speed_slider
+            grid_cell:
+              row: 0
+              column: 1
             width: 50%
             height: 12
-            x: 150
-            y: 80
             min_value: 0
             max_value: 100
             value: 0
@@ -142,9 +144,10 @@ lvgl:
         # ── Speed readout ────────────────────────────────────────────────────
         - label:
             id: fan_speed_label
+            grid_cell:
+              row: 0
+              column: 2
             text: "0%"
-            x: 420
-            y: 76
             text_font: montserrat_18
             text_color: ${color_accent}
             bg_color: 0x000000
@@ -153,46 +156,7 @@ lvgl:
             shadow_color: ${color_shadow}
 
     
-        - button:
-            id: fan_btn_toggle
-            x: 30
-            y: 150
-            height: $button_height_single
-            width: $button_width
-            bg_color: ${color_btn_on}
-            radius: 18
-            widgets:
-              - label:
-                  id: fan_btn_state_lbl
-                  text: "  Fan On"
-                  text_color: ${color_white}
-                  text_font: montserrat_14
-              - label:
-                  id: fan_icon_lbl
-                  align: CENTER
-                  text: "\U000F0210"       # mdi:fan glyph
-                  text_font: mdi_56
-                  text_color: 0x546E7A    # starts grey (off)
-                  # Pivot at icon centre so it spins in place
-                  transform_pivot_x: 28
-                  transform_pivot_y: 28
-                  transform_angle: 0
-            on_click:
-              then:
-                - if:
-                    condition:
-                      binary_sensor.is_on: ha_fan_state
-                    then:
-                      - homeassistant.service:
-                          service: fan.turn_off
-                          data:
-                            entity_id: ${ceiling_fan}
-                    else:
-                      - homeassistant.service:
-                          service: fan.turn_on
-                          data:
-                            entity_id: ${ceiling_fan}
-
+        
 # ─── Animation interval ───────────────────────────────────
 # Runs every 40 ms (~25 fps). Advances angle only while fan is ON.
 interval:
