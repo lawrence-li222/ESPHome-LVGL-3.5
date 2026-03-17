@@ -110,7 +110,7 @@ font:
 
   - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
     id: mdi_icons
-    size: 24
+    size: 56
     glyphs:
       - "\U000F06E8"  # mdi:lightbulb-on
       - "\U000F06E9"  # mdi:lightbulb-on-outline
