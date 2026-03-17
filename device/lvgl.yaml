@@ -17,6 +17,8 @@ substitutions:
   color_subtle:     "0xAAAAAA"
   color_white:      "0xFFFFFF"
   color_shadow:     "0xA6A6A6"
+  color_btn_white:  "0xFFFFFF"
+  color_btn_yellow: "0xFFF9C8"
 
 lvgl:
   buffer_size: 100%
@@ -237,6 +239,100 @@ lvgl:
         # ── light readout ────────────────────────────────────────────────────
         - label:
             id: y_light_brightness_label
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 1
+            grid_cell_x_align: CENTER
+            grid_cell_y_align: CENTER
+            text: "0%"
+            text_font: montserrat_18
+            text_color: ${color_accent}
+            bg_color: 0x000000
+            bg_opa: 50%
+            shadow_width: 4
+            shadow_color: ${color_shadow}
+
+        # ── white light  ─────────────────────────────────────────────
+        - button:
+            id: w_light_btn_toggle
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 1
+            grid_cell_x_align: CENTER
+            grid_cell_y_align: CENTER
+            height: $button_height_single
+            width: $button_width
+            bg_color: ${color_btn_off}
+            radius: 18
+            widgets:
+              - label:
+                  id: w_light_icon_lbl
+                  align: CENTER
+                  text: "\U000F06E8"       # mdi:lightbulb-on glyph
+                  text_font: mdi_icons
+                  text_color: 0x546E7A    # starts grey (off)
+                  # Pivot at icon centre so it spins in place
+                  transform_pivot_x: 28
+                  transform_pivot_y: 28
+                  transform_angle: 0
+            on_click:
+              then:
+                - if:
+                    condition:
+                      binary_sensor.is_on: w_light_state
+                    then:
+                      - homeassistant.service:
+                          service: light.turn_off
+                          data:
+                            entity_id: ${white_light}
+                    else:
+                      - homeassistant.service:
+                          service: light.turn_on
+                          data:
+                            entity_id: ${white_light}
+        - slider:
+            id: w_light_brightness_slider
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 1
+            grid_cell_x_align: CENTER
+            grid_cell_y_align: CENTER
+            width: 50%
+            height: 12
+            min_value: 0
+            max_value: 100
+            value: 0
+            bg_color: ${color_track}
+            radius: 6
+            shadow_width: 4
+            shadow_color: ${color_shadow}
+            indicator:
+              bg_color: ${color_accent}
+              radius: 6
+            knob:
+              bg_color: ${color_knob}
+              width: 28
+              height: 28
+              radius: 14
+              shadow_width: 8
+              shadow_color: ${color_accent}
+            on_value:
+              then:
+                - lvgl.label.update:
+                    id: w_light_brightness_label
+                    text: !lambda |-
+                      return std::to_string((int)x) + "%";
+            on_release:
+              then:
+                - logger.log:
+                    format: "White light slider released: %.0f%%"
+                    args: [x]
+                - homeassistant.service:
+                    service: light.turn_on
+                    data:
+                      entity_id: ${white_light}          # ← same entity as in sensors.yaml
+                      brightness: !lambda "return (int)x;"
+                
+        # ── light readout ────────────────────────────────────────────────────
+        - label:
+            id: w_light_brightness_label
             grid_cell_column_pos: 2
             grid_cell_row_pos: 1
             grid_cell_x_align: CENTER
