@@ -1,6 +1,7 @@
 substitutions:
   ceiling_fan: fan.office_ceiling_fan      # must match ha_fan.yaml
-
+  yellow_light: light.office_ceiling_light_yellow   # must match ha_yellow_light.yaml
+  white_light: light.office_ceiling_light_white   # must match ha_white_light.yaml
 # ─── Home Assistant sensors ───────────────────────────────
 binary_sensor:
   - platform: homeassistant
@@ -40,7 +41,38 @@ binary_sensor:
             # - lvgl.label.update:
             #     id: fan_btn_state_lbl
             #     text: "  Fan Off"
-            
+  - platform: homeassistant
+    id: y_light_state
+    entity_id: ${yellow_light}          # ← change to your light entity
+    on_state:
+      - lambda: id(y_light_on) = x;
+      - if:
+          condition:
+            lambda: return x;
+          then:
+            # Light turned ON – yellow icon + "On" label
+            - lvgl.widget.update:
+                id: y_light_icon_lbl
+                text_color: 0xFFEE58
+            - lvgl.widget.update:
+                id: y_light_btn_toggle
+                bg_color: ${color_btn_on}
+            # - lvgl.label.update:
+            #     id: y_light_btn_state_lbl
+            #     text: "  Light On"
+          else:
+            # Light turned OFF – grey icon + "Off" label
+            - lvgl.widget.update:
+                id: y_light_icon_lbl
+                text_color: 0x546E7A
+            - lvgl.widget.update:
+                id: y_light_btn_toggle
+                bg_color: ${color_btn_off}
+            # - lvgl.label.update:
+            #     id: y_light_btn_state_lbl
+            #     text: "  Light Off"
+    name: "Yellow Light State"
+ 
 sensor:
   - platform: homeassistant
     id: ha_fan_speed
@@ -57,4 +89,17 @@ sensor:
               if (isnan(x)) return std::string("--");
               return std::to_string((int)x) + "%";
 
-   
+  - platform: homeassistant
+    id: y_light_brigfhtness
+    entity_id: ${yellow_light}          # ← same entity as in ha_yellow_light
+    attribute: brightness
+    on_value:
+      then:
+        - lvgl.slider.update:
+            id: y_light_brightness_slider
+            value: !lambda 'return x / 255.0 * 100.0;'   # convert 0-255 to 0-100%
+        - lvgl.label.update:
+            id: y_light_brightness_label
+            text: !lambda |-
+              if (isnan(x)) return std::string("--");
+              return std::to_string((int)x) + "%";

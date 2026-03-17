@@ -1,5 +1,7 @@
 substitutions:
   ceiling_fan: fan.office_ceiling_fan      # must match ha_fan.yaml
+  yellow_light: light.office_ceiling_light_yellow   # must match ha_yellow_light.yaml
+  white_light: light.office_ceiling_light_white   # must match ha_white_light.yaml
 
   # ── Colours (tweak here, applied everywhere) ──────────────────────────────
   color_bg:         "0x0D0D1A"
@@ -141,6 +143,100 @@ lvgl:
         # ── Speed readout ────────────────────────────────────────────────────
         - label:
             id: fan_speed_label
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 0
+            grid_cell_x_align: CENTER
+            grid_cell_y_align: CENTER
+            text: "0%"
+            text_font: montserrat_18
+            text_color: ${color_accent}
+            bg_color: 0x000000
+            bg_opa: 50%
+            shadow_width: 4
+            shadow_color: ${color_shadow}
+
+        # ── yellow light  ─────────────────────────────────────────────
+        - button:
+            id: y_light_btn_toggle
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 0
+            grid_cell_x_align: CENTER
+            grid_cell_y_align: CENTER
+            height: $button_height_single
+            width: $button_width
+            bg_color: ${color_btn_off}
+            radius: 18
+            widgets:
+              - label:
+                  id: y_light_icon_lbl
+                  align: CENTER
+                  text: "\U000F06E8"       # mdi:lightbulb-on glyph
+                  text_font: mdi_icons
+                  text_color: 0x546E7A    # starts grey (off)
+                  # Pivot at icon centre so it spins in place
+                  transform_pivot_x: 28
+                  transform_pivot_y: 28
+                  transform_angle: 0
+            on_click:
+              then:
+                - if:
+                    condition:
+                      binary_sensor.is_on: ha_fan_state
+                    then:
+                      - homeassistant.service:
+                          service: light.turn_off
+                          data:
+                            entity_id: ${yellow_light}
+                    else:
+                      - homeassistant.service:
+                          service: light.turn_on
+                          data:
+                            entity_id: ${yellow_light}
+        - slider:
+            id: y_light_brightness_slider
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 0
+            grid_cell_x_align: CENTER
+            grid_cell_y_align: CENTER
+            width: 50%
+            height: 12
+            min_value: 0
+            max_value: 100
+            value: 0
+            bg_color: ${color_track}
+            radius: 6
+            shadow_width: 4
+            shadow_color: ${color_shadow}
+            indicator:
+              bg_color: ${color_accent}
+              radius: 6
+            knob:
+              bg_color: ${color_knob}
+              width: 28
+              height: 28
+              radius: 14
+              shadow_width: 8
+              shadow_color: ${color_accent}
+            on_value:
+              then:
+                - lvgl.label.update:
+                    id: y_light_brightness_label
+                    text: !lambda |-
+                      return std::to_string((int)x) + "%";
+            on_release:
+              then:
+                - logger.log:
+                    format: "Yellow light slider released: %.0f%%"
+                    args: [x]
+                - homeassistant.service:
+                    service: light.turn_on
+                    data:
+                      entity_id: ${yellow_light}          # ← same entity as in sensors.yaml
+                      brightness: !lambda "return (int)x;"
+                
+        # ── light readout ────────────────────────────────────────────────────
+        - label:
+            id: y_light_brightness_label
             grid_cell_column_pos: 2
             grid_cell_row_pos: 0
             grid_cell_x_align: CENTER

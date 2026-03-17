@@ -107,6 +107,17 @@ font:
       - "\U000F059D"   # mdi:weather-windy  (wind)
       - "\U000F02E3"   # mdi:thermometer    (feels-like)
       - "\U000F0D43"   # mdi:umbrella-outline (precipitation)
+
+  - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_icons
+    size: 24
+    glyphs:
+      - "\U000F06E8"  # mdi:lightbulb-on
+      - "\U000F06E9"  # mdi:lightbulb-on-outline
+      - "\U000F0335"  # mdi:lightbulb
+      - "\U000F0336"  # mdi:lightbulb-outline
+      - "\U000F0F5E"  # mdi:lightbulb-off
+      - "\U000F0F5F"  # mdi:lightbulb-off-outline
 lvgl:
   style_definitions:
     - id: roboto15_style
