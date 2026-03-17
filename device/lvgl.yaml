@@ -17,7 +17,7 @@ substitutions:
   color_subtle:     "0xAAAAAA"
   color_white:      "0xFFFFFF"
   color_shadow:     "0xA6A6A6"
-  color_btn_white:  "0xFFFFFF"
+  color_btn_white:  "0xEEEEEE"
   color_btn_yellow: "0xFFF9C8"
 
 lvgl:
