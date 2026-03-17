@@ -97,7 +97,7 @@ sensor:
       then:
         - lvgl.slider.update:
             id: y_light_brightness_slider
-            value: !lambda 'return x / 255.0 * 100.0;'   # convert 0-255 to 0-100%
+            value: !lambda 'return x;'   # convert 0-255 to 0-100%
         - lvgl.label.update:
             id: y_light_brightness_label
             text: !lambda |-
