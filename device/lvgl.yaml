@@ -52,7 +52,7 @@ lvgl:
     - id: main_page
       layout: 
         type: grid
-        grid_columns: [fr(1), fr(1), fr(1)]
+        grid_columns: [fr(1), fr(2), fr(1)]
         grid_rows: [fr(1), fr(1), fr(1)]
       pad_top: 45
       bg_color: Black
@@ -67,11 +67,11 @@ lvgl:
             bg_color: ${color_btn_on}
             radius: 18
             widgets:
-              - label:
-                  id: fan_btn_state_lbl
-                  text: "  Fan On"
-                  text_color: ${color_white}
-                  text_font: montserrat_14
+              # - label:
+              #     id: fan_btn_state_lbl
+              #     text: "  Fan On"
+              #     text_color: ${color_white}
+              #     text_font: montserrat_14
               - label:
                   id: fan_icon_lbl
                   align: CENTER
@@ -101,7 +101,8 @@ lvgl:
             id: fan_speed_slider
             grid_cell_column_pos: 1
             grid_cell_row_pos: 0
-            width: 50%
+            align: CENTER
+            width: 100%
             height: 12
             min_value: 0
             max_value: 100
@@ -142,6 +143,7 @@ lvgl:
             id: fan_speed_label
             grid_cell_column_pos: 2
             grid_cell_row_pos: 0
+            align: CENTER
             text: "0%"
             text_font: montserrat_18
             text_color: ${color_accent}
