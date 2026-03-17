@@ -77,7 +77,7 @@ lvgl:
                   text_font: montserrat_14
               - label:
                   id: fan_icon_lbl
-                  align: BOTTOM_CENTER
+                  align: CENTER
                   text: "\U000F0210"       # mdi:fan glyph
                   text_font: mdi_56
                   text_color: 0x546E7A    # starts grey (off)
