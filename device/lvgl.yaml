@@ -62,9 +62,8 @@ lvgl:
       widgets:
         - button:
             id: fan_btn_toggle
-            grid_cell:
-              row: 0
-              column: 0
+            grid_cell_column_pos: 0
+            grid_cell_row_pos: 0
             height: $button_height_single
             width: $button_width
             bg_color: ${color_btn_on}
@@ -102,9 +101,8 @@ lvgl:
                             entity_id: ${ceiling_fan}
         - slider:
             id: fan_speed_slider
-            grid_cell:
-              row: 0
-              column: 1
+            grid_cell_column_pos: 1
+            grid_cell_row_pos: 0
             width: 50%
             height: 12
             min_value: 0
@@ -144,9 +142,8 @@ lvgl:
         # ── Speed readout ────────────────────────────────────────────────────
         - label:
             id: fan_speed_label
-            grid_cell:
-              row: 0
-              column: 2
+            grid_cell_column_pos: 2
+            grid_cell_row_pos: 0
             text: "0%"
             text_font: montserrat_18
             text_color: ${color_accent}
