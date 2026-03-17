@@ -64,16 +64,13 @@ lvgl:
             id: fan_btn_toggle
             grid_cell_column_pos: 0
             grid_cell_row_pos: 0
+            grid_cell_x_align: CENTER
+            grid_cell_y_align: CENTER
             height: $button_height_single
             width: $button_width
-            bg_color: ${color_btn_on}
+            bg_color: ${color_btn_off}
             radius: 18
             widgets:
-              # - label:
-              #     id: fan_btn_state_lbl
-              #     text: "  Fan On"
-              #     text_color: ${color_white}
-              #     text_font: montserrat_14
               - label:
                   id: fan_icon_lbl
                   align: CENTER
