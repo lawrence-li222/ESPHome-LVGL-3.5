@@ -116,12 +116,12 @@ sensor:
             id: y_light_brightness_slider
             value: !lambda |- 
               if(isnan(x)) return 0;
-              return x;   
+              return (int)x;   
         - lvgl.label.update:
             id: y_light_brightness_label
             text: !lambda |-
               if (isnan(x)) return std::string("--");
-              return std::to_string(round((int)x/255.0 * 100)) + "%";
+              return std::to_string((int)round(x / 255.0 * 100)) + "%";
 
   - platform: homeassistant
     id: w_light_brigfhtness
@@ -132,10 +132,10 @@ sensor:
         - lvgl.slider.update:
             id: w_light_brightness_slider
             value: !lambda |- 
-              if(isnan(x)) return 0;
-              return (x/ 1000) * 255;   
+              if (isnan(x)) return 0;
+              return (int)x; 
         - lvgl.label.update:
             id: w_light_brightness_label
             text: !lambda |-
               if (isnan(x)) return std::string("--");
-              return std::to_string(round((int)x/255.0 * 100)) + "%";
+              return std::to_string((int)round(x / 255.0 * 100)) + "%";
