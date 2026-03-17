@@ -33,6 +33,7 @@ binary_sensor:
             - lvgl.widget.update:
                 id: fan_btn_toggle
                 bg_color: ${color_btn_off}
+
   - platform: homeassistant
     id: y_light_state
     entity_id: ${yellow_light}          # ← change to your light entity
@@ -40,7 +41,9 @@ binary_sensor:
       #- lambda: id(y_light_on) = x;
       - if:
           condition:
-            lambda: return x;
+            lambda: |-
+              if (!id(y_light_state).has_state()) return false;
+              return x;
           then:
             # Light turned ON – yellow icon + "On" label
             - lvgl.widget.update:
@@ -66,7 +69,9 @@ binary_sensor:
       #- lambda: id(w_light_on) = x;
       - if:
           condition:
-            lambda: return x;
+            lambda: |-
+              if (!id(y_light_state).has_state()) return false;
+              return x;
           then:
             # Light turned ON – yellow icon + "On" label
             - lvgl.widget.update:
