@@ -58,4 +58,5 @@ text_sensor:
           }
           auto *obj = id(weather_icon_lbl);
           lv_label_set_text(obj, glyph);
-          lv_obj_set_style_text_color(obj, col, LV_PART_MAIN | LV_STATE_DEFAULT);
+          lv_obj_set_style_text_color(obj, col,
+            (lv_style_selector_t)(LV_PART_MAIN | LV_STATE_DEFAULT));  // ← cast fix

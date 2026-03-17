@@ -76,7 +76,7 @@ binary_sensor:
             # Light turned ON – yellow icon + "On" label
             - lvgl.widget.update:
                 id: w_light_icon_lbl
-                text_color: 0xeeeeee
+                text_color: 0x7A7A7A
             - lvgl.widget.update:
                 id: w_light_btn_toggle
                 bg_color: ${color_btn_white}
