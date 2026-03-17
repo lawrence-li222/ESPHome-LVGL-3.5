@@ -159,7 +159,7 @@ lvgl:
         - button:
             id: y_light_btn_toggle
             grid_cell_column_pos: 0
-            grid_cell_row_pos: 0
+            grid_cell_row_pos: 1
             grid_cell_x_align: CENTER
             grid_cell_y_align: CENTER
             height: $button_height_single
@@ -195,7 +195,7 @@ lvgl:
         - slider:
             id: y_light_brightness_slider
             grid_cell_column_pos: 1
-            grid_cell_row_pos: 0
+            grid_cell_row_pos: 1
             grid_cell_x_align: CENTER
             grid_cell_y_align: CENTER
             width: 50%
@@ -238,7 +238,7 @@ lvgl:
         - label:
             id: y_light_brightness_label
             grid_cell_column_pos: 2
-            grid_cell_row_pos: 0
+            grid_cell_row_pos: 1
             grid_cell_x_align: CENTER
             grid_cell_y_align: CENTER
             text: "0%"
